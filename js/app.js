@@ -9,6 +9,7 @@ var Enemy = function() {
 };
 
 // Update the enemy's position, required method for game
+// Handles collision with the Player
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
@@ -24,7 +25,26 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var Player = function() {
+    this.sprite = 'images/char-pink-girl.png';
+};
 
+Player.prototype.update = function(dt) {
+
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+
+// Receives user input and moves player according to input
+// Player cannot move off screen
+Player.prototype.handleInput = function(key) {
+
+};
+
+// If player reaches the water, reset game by moving player back to initial location
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
