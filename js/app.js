@@ -66,16 +66,6 @@ class Player extends GamePiece {
     }
 }
 
-function checkCollisions() {
-    // acct width of sprite on each side
-//    if (((Player.x + 50) <= (Enemy.x + 50)) && ((Player.x - 50) >= (Enemy.x - 50)) || ((Enemy.x + 50) <= (Player.x + 50)) && ((Enemy.x - 50) >= (Player.x - 50)) {
-//         console.log('Oh no');
-//         Player.x = 200;
-//         Player.y = 400;
-//     }
-}
-
-
 
 // If player reaches the water, reset game by moving player back to initial location
 
@@ -88,7 +78,6 @@ let allEnemies = [];
 for (let i = 0; i <= 2; i++) {
     let xinit = Math.floor(Math.random() * 500);
     let yinit = Math.floor(Math.random() * 300);
-    console.log(yinit);
     let enemy = new Enemy(xinit, yinit, Math.floor(Math.random() * 150) + 50);
     // enemies initial position
     allEnemies.push(enemy);
@@ -108,3 +97,18 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+function checkCollisions() {
+    // bounding box test
+    // width: 101px - 50px
+    // height: 171px - 85px
+    allEnemies.forEach(function(enemy) {
+        if ((player.x < enemy.x + 50)  && (player.x + 50  > enemy.x) &&
+        (player.y < enemy.y + 85) && (player.y + 85 > enemy.y)) {
+        // Oh no
+        player.x = 200;
+        player.y = 400;
+        };
+    });
+
+}
