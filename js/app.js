@@ -1,3 +1,6 @@
+// canvas width = 505
+// canvas height = 606
+
 class GamePiece {
 
     constructor (x, y, sprite) {
@@ -49,19 +52,14 @@ class Player extends GamePiece {
     // Receives user input and moves player according to input
     // Player cannot move off screen
     handleInput(key) {
-        switch(key) {
-            case 'left':
-                this.x -= 50;
-                break;
-            case 'up':
-                this.y -= 50;
-                break;
-            case 'right':
-                this.x += 50;
-                break;
-            case 'down':
-                this.y += 50;
-                break;
+        if (key === 'left' && this.x - 50 >= 0) {
+            this.x -= 50;
+        } else if (key === 'up' && this.y - 60 >= 0) {
+            this.y -=60;
+        } else if (key === 'right' && this.x + 50 <= 400) {
+            this.x += 50;
+        } else if (key === 'down' && this.y + 50 <= 400) {
+            this.y += 50;
         }
     }
 }
@@ -104,7 +102,7 @@ function checkCollisions() {
     // height: 171px - 85px
     allEnemies.forEach(function(enemy) {
         if ((player.x < enemy.x + 50)  && (player.x + 50  > enemy.x) &&
-        (player.y < enemy.y + 85) && (player.y + 85 > enemy.y)) {
+        (player.y < enemy.y + 80) && (player.y + 80 > enemy.y)) {
         // Oh no
         player.x = 200;
         player.y = 400;
