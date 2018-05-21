@@ -46,7 +46,9 @@ class Player extends GamePiece {
     }
 
     update() {
-
+        if (this.y <= 50) {
+            alert("You win!");
+        }
     }
 
     // Receives user input and moves player according to input
@@ -75,7 +77,7 @@ let allEnemies = [];
 
 for (let i = 0; i <= 2; i++) {
     let xinit = Math.floor(Math.random() * 500);
-    let yinit = Math.floor(Math.random() * 300);
+    let yinit = Math.floor(Math.random() * (240 - 50) + 50);
     let enemy = new Enemy(xinit, yinit, Math.floor(Math.random() * 150) + 50);
     // enemies initial position
     allEnemies.push(enemy);
