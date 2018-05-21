@@ -30,9 +30,7 @@ class Enemy extends GamePiece {
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += this.speed * dt;
-        if (this.x >= 505) {
-            this.x = -100;
-        }
+        if (this.x >= 505) this.x = -100;
     }
 }
 
@@ -46,22 +44,21 @@ class Player extends GamePiece {
     }
 
     update() {
-        if (this.y <= 50) {
-            alert("You win!");
-        }
+        if (this.y <= 50) alert("You win!");
     }
 
     // Receives user input and moves player according to input
     // Player cannot move off screen
     handleInput(key) {
-        if (key === 'left' && this.x - 50 >= 0) {
-            this.x -= 50;
-        } else if (key === 'up' && this.y - 60 >= 0) {
-            this.y -=60;
-        } else if (key === 'right' && this.x + 50 <= 400) {
-            this.x += 50;
-        } else if (key === 'down' && this.y + 50 <= 400) {
-            this.y += 50;
+        let moveIncrement = 40;
+        if (key === 'left' && this.x - moveIncrement >= 0) {
+            this.x -= moveIncrement;
+        } else if (key === 'up' && this.y - moveIncrement >= 0) {
+            this.y -= moveIncrement;
+        } else if (key === 'right' && this.x + moveIncrement <= 400) {
+            this.x += moveIncrement;
+        } else if (key === 'down' && this.y + moveIncrement <= 400) {
+            this.y += moveIncrement;
         }
     }
 }
@@ -87,7 +84,7 @@ let player = new Player(200, 400);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', e => {
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -102,7 +99,7 @@ function checkCollisions() {
     // bounding box test
     // width: 101px - 50px
     // height: 171px - 85px
-    allEnemies.forEach(function(enemy) {
+    allEnemies.forEach(enemy => {
         if ((player.x < enemy.x + 50)  && (player.x + 50  > enemy.x) &&
         (player.y < enemy.y + 80) && (player.y + 80 > enemy.y)) {
         // Oh no
