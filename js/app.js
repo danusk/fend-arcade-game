@@ -2,6 +2,7 @@
 // canvas height = 60
 const WATER_EDGE = 50;
 const MAX_X = 500;
+const MAX_Y = 400;
 const INIT_X = 200;
 const INIT_Y = 400;
 
@@ -28,6 +29,7 @@ class Enemy extends GamePiece {
         y = Math.floor(Math.random() * (240 - WATER_EDGE) + WATER_EDGE),
         speed = Math.floor(Math.random() * 150) + WATER_EDGE,
         sprite = 'images/enemy-bug.png') {
+
         super(x, y, sprite);
         this.speed = speed;
     }
@@ -66,9 +68,9 @@ class Player extends GamePiece {
             this.x -= moveIncrement;
         } else if (key === 'up' && this.y - moveIncrement >= 0) {
             this.y -= moveIncrement;
-        } else if (key === 'right' && this.x + moveIncrement <= 400) {
+        } else if (key === 'right' && this.x + moveIncrement <= MAX_Y) {
             this.x += moveIncrement;
-        } else if (key === 'down' && this.y + moveIncrement <= 400) {
+        } else if (key === 'down' && this.y + moveIncrement <= MAX_Y) {
             this.y += moveIncrement;
         }
     }
@@ -106,7 +108,7 @@ function checkCollisions() {
     // height: 171px
     const spriteDim = 50;
     allEnemies.forEach(enemy => {
-        if ((player.x < enemy.x + spriteDim)  && (player.x + spriteDim  > enemy.x) &&
+        if ((player.x < enemy.x + spriteDim) && (player.x + spriteDim > enemy.x) &&
         (player.y < enemy.y + spriteDim) && (player.y + spriteDim > enemy.y)) {
         player.x = INIT_X;
         player.y = INIT_Y;
