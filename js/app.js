@@ -1,5 +1,9 @@
 // canvas width = 505
-// canvas height = 606
+// canvas height = 60
+const WATER_EDGE = 50;
+const MAX_X = 500;
+const INIT_X = 200;
+const INIT_Y = 400;
 
 class GamePiece {
 
@@ -19,7 +23,11 @@ class GamePiece {
 class Enemy extends GamePiece {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    constructor(x, y, speed, sprite='images/enemy-bug.png') {
+    constructor(
+        x = Math.floor(Math.random() * MAX_X),
+        y = Math.floor(Math.random() * (240 - WATER_EDGE) + WATER_EDGE),
+        speed = Math.floor(Math.random() * 150) + WATER_EDGE,
+        sprite = 'images/enemy-bug.png') {
         super(x, y, sprite);
         this.speed = speed;
     }
@@ -30,7 +38,7 @@ class Enemy extends GamePiece {
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += this.speed * dt;
-        if (this.x >= 505) this.x = -100;
+        if (this.x >= MAX_X) this.x = -100;
     }
 }
 
@@ -39,18 +47,21 @@ class Enemy extends GamePiece {
 // a handleInput() method.
 class Player extends GamePiece {
 
-    constructor(x, y, sprite='images/char-boy.png') {
+    constructor(x = INIT_X, y = INIT_Y, sprite = 'images/char-boy.png') {
         super(x, y, sprite)
     }
 
+    // If player reaches the water, reset game by moving player back to initial location
     update() {
-        if (this.y <= 50) alert("You win!");
+        if (this.y <= WATER_EDGE) alert("You win!");
     }
 
     // Receives user input and moves player according to input
     // Player cannot move off screen
     handleInput(key) {
-        let moveIncrement = 40;
+
+        const moveIncrement = 40;
+
         if (key === 'left' && this.x - moveIncrement >= 0) {
             this.x -= moveIncrement;
         } else if (key === 'up' && this.y - moveIncrement >= 0) {
@@ -63,24 +74,18 @@ class Player extends GamePiece {
     }
 }
 
-
-// If player reaches the water, reset game by moving player back to initial location
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
 
-
 for (let i = 0; i <= 2; i++) {
-    let xinit = Math.floor(Math.random() * 500);
-    let yinit = Math.floor(Math.random() * (240 - 50) + 50);
-    let enemy = new Enemy(xinit, yinit, Math.floor(Math.random() * 150) + 50);
+    let enemy = new Enemy();
     // enemies initial position
     allEnemies.push(enemy);
 }
 
-let player = new Player(200, 400);
+let player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -97,15 +102,14 @@ document.addEventListener('keyup', e => {
 
 function checkCollisions() {
     // bounding box test
-    // width: 101px - 50px
-    // height: 171px - 85px
+    // width: 101px
+    // height: 171px
+    const spriteDim = 50;
     allEnemies.forEach(enemy => {
-        if ((player.x < enemy.x + 50)  && (player.x + 50  > enemy.x) &&
-        (player.y < enemy.y + 80) && (player.y + 80 > enemy.y)) {
-        // Oh no
-        player.x = 200;
-        player.y = 400;
+        if ((player.x < enemy.x + spriteDim)  && (player.x + spriteDim  > enemy.x) &&
+        (player.y < enemy.y + spriteDim) && (player.y + spriteDim > enemy.y)) {
+        player.x = INIT_X;
+        player.y = INIT_Y;
         };
     });
-
 }
