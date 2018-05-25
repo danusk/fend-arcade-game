@@ -1,5 +1,6 @@
 body {
     text-align: center;
+    font-family: 'Space Mono', monospace;
 }
 
 .modal {
@@ -14,8 +15,8 @@ body {
 
 .modal-content {
     background-color: white;
-    width: 500px;
-    height: 30%;
+    width: 400px;
+    height: 200px;
     margin: 300px auto;
     text-align: center;
     animation-name: modal-appear;
@@ -28,10 +29,11 @@ body {
     to {top: 0; opacity: 1}
 }
 
+
 .modal-header {
     margin: 0;
-    height: 30px;
-    background-color: #b276e0;
+    height: 25px;
+    background-color: #3394ff;
 }
 
 

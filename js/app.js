@@ -1,10 +1,7 @@
-// canvas width = 505
-// canvas height = 60
-const WATER_EDGE = 50;
-const MAX_X = 500;
-const MAX_Y = 400;
-const INIT_X = 200;
-const INIT_Y = 400;
+const   WATER_EDGE = 30,
+        INIT_X = 200,
+        MAX_Y = 400,
+        MAX_X = 500;
 
 class GamePiece {
 
@@ -49,14 +46,20 @@ class Enemy extends GamePiece {
 // a handleInput() method.
 class Player extends GamePiece {
 
-    constructor(x = INIT_X, y = INIT_Y, sprite = 'images/char-boy.png') {
+    constructor(x = INIT_X, y = MAX_Y, sprite = 'images/char-boy.png') {
         super(x, y, sprite)
     }
 
     // If player reaches the water, reset game by moving player back to initial location
     update() {
-        const modal = document.querySelector(".modal");
-        if (this.y <= WATER_EDGE) modal.style.display = "block";
+
+        const modal = document.querySelector('.modal');
+        if (this.y <= WATER_EDGE) {
+            modal.style.display = 'block';
+            document.removeEventListener('keyup', handleInput);
+        }
+    }
+
 
     // Receives user input and moves player according to input
     // Player cannot move off screen
@@ -83,14 +86,13 @@ let allEnemies = [];
 
 for (let i = 0; i <= 2; i++) {
     let enemy = new Enemy();
-    // enemies initial position
     allEnemies.push(enemy);
 }
 
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Player.handleInput() method.
 document.addEventListener('keyup', e => {
     var allowedKeys = {
         37: 'left',
@@ -104,14 +106,12 @@ document.addEventListener('keyup', e => {
 
 function checkCollisions() {
     // bounding box test
-    // width: 101px
-    // height: 171px
     const spriteDim = 50;
     allEnemies.forEach(enemy => {
         if ((player.x < enemy.x + spriteDim) && (player.x + spriteDim > enemy.x) &&
         (player.y < enemy.y + spriteDim) && (player.y + spriteDim > enemy.y)) {
         player.x = INIT_X;
-        player.y = INIT_Y;
+        player.y = MAX_Y;
         };
     });
 }
