@@ -55,8 +55,8 @@ class Player extends GamePiece {
 
     // If player reaches the water, reset game by moving player back to initial location
     update() {
-        if (this.y <= WATER_EDGE) alert("You win!");
-    }
+        const modal = document.querySelector(".modal");
+        if (this.y <= WATER_EDGE) modal.style.display = "block";
 
     // Receives user input and moves player according to input
     // Player cannot move off screen
