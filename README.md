@@ -1,6 +1,11 @@
-frontend-nanodegree-arcade-game
+fend-arcade-game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## How to Run
+Visit the gameplay page here: https://danusk.github.io/fend-arcade-game/
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## How to Play
+* Guide the player character from the grass to the water.
+* Control the player character using the up, down, left, and right arrow keys. 
+* Try to avoid colliding with enemy bugs - collisions send you back to the starting position. 
+* Reach the water safely and win the game!
