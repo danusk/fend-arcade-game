@@ -1,7 +1,8 @@
 const   WATER_EDGE = 30,
         INIT_X = 200,
         MAX_Y = 400,
-        MAX_X = 500;
+        MAX_X = 500,
+        NUM_ENEMIES = 5;
 
 class GamePiece {
 
@@ -11,16 +12,16 @@ class GamePiece {
         this.sprite = sprite;
     }
 
-    // Draw the game piece screen, required method for game
+    // Draw the game piece screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
 
-// Enemies our player must avoid
 class Enemy extends GamePiece {
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+
+    // The image/sprite for enemies, this uses
+    // a helper provided to easily load images
     constructor(
         x = Math.floor(Math.random() * MAX_X),
         y = Math.floor(Math.random() * (240 - WATER_EDGE) + WATER_EDGE),
@@ -31,19 +32,17 @@ class Enemy extends GamePiece {
         this.speed = speed;
     }
 
-    // Update the enemy's position, required method for game
+    // Update the enemy's position
     update(dt) {
-        // You should multiply any movement by the dt parameter
-        // which will ensure the game runs at the same speed for
+        // Movement multiplied by the dt parameter
+        // to ensure the game runs at the same speed for
         // all computers.
         this.x += this.speed * dt;
         if (this.x >= MAX_X) this.x = -100;
     }
 }
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Player class
 class Player extends GamePiece {
 
     constructor(x = INIT_X, y = MAX_Y, sprite = 'images/char-boy.png') {
@@ -65,6 +64,7 @@ class Player extends GamePiece {
     // Player cannot move off screen
     handleInput(key) {
 
+        // Amount player moves for each key input
         const moveIncrement = 40;
 
         if (key === 'left' && this.x - moveIncrement >= 0) {
@@ -79,20 +79,20 @@ class Player extends GamePiece {
     }
 }
 
-// Now instantiate your objects.
+
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 let allEnemies = [];
 
-for (let i = 0; i <= 2; i++) {
+for (let i = 0; i <= NUM_ENEMIES - 1; i++) {
     let enemy = new Enemy();
     allEnemies.push(enemy);
 }
 
+// Instantiate Player
 let player = new Player();
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method.
+// Listens for key presses and sends the keys to
+// Player.handleInput() method
 document.addEventListener('keyup', e => {
     var allowedKeys = {
         37: 'left',
@@ -104,9 +104,13 @@ document.addEventListener('keyup', e => {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// Bounding box test to check for collisions
+// between enemies and player
 function checkCollisions() {
-    // bounding box test
-    const spriteDim = 50;
+
+    // Sprite box size
+    const spriteDim = 55;
+
     allEnemies.forEach(enemy => {
         if ((player.x < enemy.x + spriteDim) && (player.x + spriteDim > enemy.x) &&
         (player.y < enemy.y + spriteDim) && (player.y + spriteDim > enemy.y)) {
