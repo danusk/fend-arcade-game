@@ -119,7 +119,17 @@ var Engine = (function(global) {
             row, col;
 
         // Before drawing, clear existing canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        // Lives display
+        ctx.font = '900 20px "Font Awesome 5 Free"';
+        ctx.fillStyle = "red";
+        let x = 480;
+        let y = 40;
+        for (let i = 0; i < lives.length; i++) {
+            ctx.fillText('\uf004' + lives[i], x, y);
+            x -= 25;
+        }
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that

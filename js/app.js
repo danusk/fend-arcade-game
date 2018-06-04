@@ -4,6 +4,8 @@ const   WATER_EDGE = 30,
         MAX_X = 500,
         NUM_ENEMIES = 5;
 
+var lives = ['', '', ''];
+
 class GamePiece {
 
     constructor (x, y, sprite) {
@@ -53,9 +55,17 @@ class Player extends GamePiece {
     update() {
 
         const modal = document.querySelector('.modal');
+
         if (this.y <= WATER_EDGE) {
             modal.style.display = 'block';
             document.removeEventListener('keyup', handleInput);
+        }
+
+        if (lives.length === 0) {
+           let modalText = document.querySelector('h1');
+           modalText.innerHTML = 'Game Over';
+           modal.style.display = 'block';
+           document.removeEventListener('keyup', handleInput);
         }
     }
 
@@ -116,6 +126,7 @@ function checkCollisions() {
         (player.y < enemy.y + spriteDim) && (player.y + spriteDim > enemy.y)) {
         player.x = INIT_X;
         player.y = MAX_Y;
+        lives.splice(lives.length - 1, 1);
         };
     });
 }
